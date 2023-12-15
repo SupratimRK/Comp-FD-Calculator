@@ -1,3 +1,6 @@
+// Declare chart variable outside the displayChart function to keep track of the chart instance
+let myFDChart;
+
 function calculateFD() {
     const principalAmount = parseFloat(document.getElementById('principalAmount').value);
     const interestRate = parseFloat(document.getElementById('interestRate').value);
@@ -37,7 +40,14 @@ function formatCurrency(amount) {
 
 function displayChart(principalAmount, interestEarned) {
     const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
+    
+    // Destroy the previous chart instance if it exists
+    if (myFDChart) {
+        myFDChart.destroy();
+    }
+
+    // Create a new chart instance
+    myFDChart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: ['Principal Amount', 'Interest Earned'],
